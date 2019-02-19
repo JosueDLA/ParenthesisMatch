@@ -51,7 +51,7 @@ public class ParenthesisMatch {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        System.out.println(Paren("{(}"));
+        System.out.println(Paren("([)]"));
     }
     
 }

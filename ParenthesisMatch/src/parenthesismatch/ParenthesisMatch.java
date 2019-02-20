@@ -21,7 +21,6 @@ public class ParenthesisMatch {
         Stack<String> pila = new Stack<String>();
         
         for (char c: cadena.toCharArray ()) { 
-            //PARENTESIS
             if(c == '('){
                 pila.push("(");
             }else if(c == '{'){

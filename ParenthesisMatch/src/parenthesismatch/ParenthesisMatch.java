@@ -5,6 +5,8 @@
  */
 package parenthesismatch;
 
+import java.util.*;
+
 /**
  *
  * @author joan
@@ -15,43 +17,48 @@ public class ParenthesisMatch {
      * @param args the command line arguments
      */
     
-    public static boolean Paren(String cadena){
-        boolean contadorCorchete = false, contadorLlave = false, contadorParentesis=false, bandera;
+    public static boolean parensMatch(String cadena){
+        Stack<String> pila = new Stack<String>();
         
-        for(char c: cadena.toCharArray()){
-            
-            if(c=='}' && contadorLlave){
-                contadorLlave=false;
-            }else if(c=='{' && !contadorLlave){
-                contadorLlave=true;
+        for (char c: cadena.toCharArray ()) { 
+            //PARENTESIS
+            if(c == '('){
+                pila.push("(");
+            }else if(c == '{'){
+                pila.push("{");
+            }else if(c == '['){
+                pila.push("[");
             }
             
-            else if(c==']' && contadorCorchete && contadorLlave){
-                contadorCorchete=false;
-            }else if(c=='[' && !contadorCorchete && contadorLlave){
-                contadorCorchete=true;
-            }
-            
-            else if(c==')' && contadorParentesis && contadorCorchete){
-                contadorParentesis=false;
-            }else if(c=='(' && !contadorParentesis && contadorCorchete){
-                contadorParentesis=true;
-            }else{
-                if(!contadorCorchete && !contadorLlave && !contadorParentesis){
-                    return false;
+            if(c == ')'){
+                if(pila.peek() == "("){
+                    pila.pop();
                 }
-                    
-            }
-            
-            
+            }else if(c == '}'){
+                if(pila.peek() == "{"){
+                    pila.pop();
+                }
+            }else if(c == ']'){
+                if(pila.peek() == "["){
+                    pila.pop();
+                }
+            } 
         }
-        return true;
+        
+        if(pila.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-        System.out.println(Paren("([)]"));
+        System.out.println("(a[0] + b[2c[6]]){24 + 53} passed: " + parensMatch("(a[0] + b[2c[6]]){24 + 53}"));
+        System.out.println("f(e(d)) passed: " + parensMatch("f(e(d))"));
+        System.out.println("((b) passed: " + !parensMatch("((b)"));
+        System.out.println("(empty) passed: " + parensMatch("(empty)"));
+        System.out.println("([)] passed: " + !parensMatch("([)]"));
+        System.out.println(" passed: " + parensMatch("     "));
+        System.out.println("passed: " + parensMatch(""));
     }
-    
 }
